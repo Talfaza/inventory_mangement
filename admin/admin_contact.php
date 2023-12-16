@@ -72,12 +72,12 @@ print_r($_SESSION);
     <p class="menu-label is-hidden-touch">Menu</p>
     <ul class="menu-list">
       <li>
-        <a href="#" class="is-active">
+        <a href="#" class="">
           <span class="icon"><i class="fa fa-home"></i></span> Home
         </a>
       </li>
       <li>
-        <a href="admin_contact.php" class="">
+        <a href="user_management_manage.php" class="is-active">
           <span class="icon"><i class="fa fa-table"></i></span> Contact
         </a>
       </li>
@@ -93,21 +93,35 @@ print_r($_SESSION);
     <div class="section">
 
       <div class="card">
-        <div class="card-header"><p class="has-text-centered card-header-title">Header</p></div>
-        <div class="card-content"><div class="content">Content</div></div>
+        <div class="card-header"><p class="has-text-centered card-header-title">Contact</p></div>
+        <div class="container"> 
+      <div class="modal" id="modal1"> 
+		<div class="modal-background"></div> 
+			<div class="modal-card"> 
+				<header class="modal-card-head"> 
+					<p class="modal-card-title">Message</p> 
+                              <button class="delete" aria-label="close"></button> 
+				</header> 
+
+				<section class="modal-card-body"> 
+					<h1>Username : </h1> 
+                              <p>message in php</p> 
+
+				</section>
+                        
+				<footer class="modal-card-foot"> 
+					<button class="button is-danger">Cancel</button> 
+				</footer> 
+			</div> 
+		</div> 
+		<button onclick="openModal();" class="button is-light"> 
+			Open Message 
+		</button> 
+	</div> 
+
+	<script src="../js/modal.js"></script>
       </div>
       <br />
-      
-      <div class="card is-hidden1">
-        <div class="card-header"><p class="card-header-title">Header</p></div>
-        <div class="card-content"><div class="content">Content</div></div>
-      </div>
-      <br />
-      
-      <div class="card is-hidden1">
-        <div class="card-header"><p class="card-header-title">Header</p></div>
-        <div class="card-content"><div class="content">Content</div></div>
-      </div>
       <br />
     <div></div>
 
