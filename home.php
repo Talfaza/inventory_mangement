@@ -1,3 +1,32 @@
+<?php
+include('database/connect_database.php');
+
+// Create a new Connection instance
+$connection = new Connection();
+$connection->selectDatabase("INVENTORY");
+
+// Check if the form is submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
+    $user = mysqli_real_escape_string($connection->conn, $_POST['user']);
+    $email = mysqli_real_escape_string($connection->conn, $_POST['email']);
+    $message = mysqli_real_escape_string($connection->conn, $_POST['message']);
+
+    // Insert data into the CONTACT table
+    $sql = "INSERT INTO INVENTORY.CONTACT (user, email, msg) VALUES ('$user', '$email', '$message')";
+
+    if ($connection->conn->query($sql) === FALSE) {
+        echo "Error: " . $sql . "<br>" . mysqli_error($connection->conn);
+    } else {
+        echo "Record inserted successfully";
+    }
+}
+
+// Close the database connection
+$connection->conn->close();
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -107,61 +136,38 @@
 
 <!--Contact-->
 
-<form action="php/databse.php" method="POST" id="contactForm">
+<form action="" method="POST" id="contactForm">
 <section class="hero" id="contact">
 <div class="hero-body">
 <div class="columns is-6">
       <div class="column is-4"></div>
-      <div class="column is-4">
+      <div class="column is-4"><div class="field">
+        <label class="label">Username</label>
+        <div class="control">
+            <input class="input is-link" type="text" placeholder="Username" id="username" name="user" required>
+        </div>
+    </div>
 
+    <div class="field">
+        <label class="label">Email</label>
+        <div class="control">
+            <input class="input is-link" type="email" placeholder="Email input" id="email" name="email" required>
+        </div>
+    </div>
 
-<div class="field">
-  <label class="label">Username</label>
-  <div class="control has-icons-left has-icons-right">
-    <input class="input is-link" type="text" placeholder="Username" id="cancel_user" name="user" required>
-    <span class="icon is-small is-left">
-      <i class="fas fa-user"></i>
-    </span>
-    <span class="icon is-small is-right">
-    </span>
-  </div>
-</div>
+    <div class="field">
+        <label class="label">Message</label>
+        <div class="control">
+            <textarea class="textarea is-link" placeholder="Textarea" id="message" name="message" required></textarea>
+        </div>
+    </div>
 
-<div class="field">
-  <label class="label">Email</label>
-  <div class="control has-icons-left has-icons-right">
-    <input class="input is-link" type="email" placeholder="Email input" id="cancel_email" required>
-    <span class="icon is-small is-left">
-      <i class="fas fa-envelope"></i>
-    </span>
-    <span class="icon is-small is-right">
-    </span>
-  </div>
-  </form>
-</div>
-
-
-<div class="field">
-  <label class="label">Message</label>
-  <div class="control">
-    <textarea class="textarea is-link" placeholder="Textarea" id="cancel_textarea" required></textarea>
-  </div>
-</div>
-
-
-
-<div class="field is-grouped">
-  <div class="control">
-      <!-- <div class='notification is-primary is-light'>
-      <button class='delete'></button>
-        Succes
-      </div> -->
- 
-    <button class="button is-link" type="submit">Submit</button>
-    <button class="button is-link is-light" onclick="clearField();">Cancel</button>
-  </div>
-</div> 
-      <div>
+    <div class="field is-grouped">
+        <div class="control">
+            <input class="button is-link" type="submit" name="submit" value="Submit">
+            <button class="button is-link is-light" onclick="clearField();">Cancel</button>
+        </div>
+    </div></div>
       <div class="column is-4"></div>
 </div>
       
@@ -179,7 +185,6 @@
   </div>
 </footer>
 <script src="js/clearField.js"></script>
-<script src="js/notificationHome.js"></script>
       
 </body>
 </html>
