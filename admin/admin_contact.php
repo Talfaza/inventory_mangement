@@ -5,6 +5,16 @@ session_start();
 
 print_r($_SESSION);
 
+$conn = new Connection();
+
+
+$stmt = $conn->getConnection()->prepare("SELECT user,email,msg FROM INVENTORY.CONTACT");
+$stmt->bind_param("sss", $user_value, $pass_value);
+$stmt->execute();
+$result = $stmt->get_result();
+
+
+print_r($result);
 
 
 
@@ -104,8 +114,11 @@ print_r($_SESSION);
 				</header> 
 
 				<section class="modal-card-body"> 
-					<h1>Username : </h1> 
-                              <p>message in php</p> 
+					<h1>Username : </h1><br> 
+					<h1>Email : </h1><br> 
+					<h1>Message : </h1><br> 
+          
+          <p>message in php</p> 
 
 				</section>
                         

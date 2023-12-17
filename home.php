@@ -3,27 +3,33 @@ include('database/connect_database.php');
 
 // Create a new Connection instance
 $connection = new Connection();
-$connection->selectDatabase("INVENTORY");
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
-    $user = mysqli_real_escape_string($connection->conn, $_POST['user']);
-    $email = mysqli_real_escape_string($connection->conn, $_POST['email']);
-    $message = mysqli_real_escape_string($connection->conn, $_POST['message']);
+    // Use mysqli_real_escape_string to sanitize user inputs
+    $user    = mysqli_real_escape_string($connection->getConnection(), $_POST['user']);
+    $email   = mysqli_real_escape_string($connection->getConnection(), $_POST['email']);
+    $message = mysqli_real_escape_string($connection->getConnection(), $_POST['message']);
 
-    // Insert data into the CONTACT table
-    $sql = "INSERT INTO INVENTORY.CONTACT (user, email, msg) VALUES ('$user', '$email', '$message')";
+    // Use prepared statements to prevent SQL injection
+    $stmt = $connection->getConnection()->prepare("INSERT INTO INVENTORY.CONTACT (user, email, msg) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $user, $email, $message);
 
-    if ($connection->conn->query($sql) === FALSE) {
-        echo "Error: " . $sql . "<br>" . mysqli_error($connection->conn);
+    // Check if the statement execution is successful
+    if ($stmt->execute() === FALSE) {
+        echo "Error: " . $stmt->error;
     } else {
         echo "Record inserted successfully";
     }
+
+    // Close the prepared statement
+    $stmt->close();
 }
 
 // Close the database connection
-$connection->conn->close();
+$connection->getConnection()->close();
 ?>
+
 
 
 
@@ -137,42 +143,41 @@ $connection->conn->close();
 <!--Contact-->
 
 <form action="" method="POST" id="contactForm">
-<section class="hero" id="contact">
-<div class="hero-body">
-<div class="columns is-6">
-      <div class="column is-4"></div>
-      <div class="column is-4"><div class="field">
-        <label class="label">Username</label>
-        <div class="control">
-            <input class="input is-link" type="text" placeholder="Username" id="username" name="user" required>
-        </div>
-    </div>
+    <section class="section">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-6">
+                    <div class="field">
+                        <label class="label">Username</label>
+                        <div class="control">
+                            <input class="input is-link" type="text" placeholder="Username" id="username" name="user" required>
+                        </div>
+                    </div>
 
-    <div class="field">
-        <label class="label">Email</label>
-        <div class="control">
-            <input class="input is-link" type="email" placeholder="Email input" id="email" name="email" required>
-        </div>
-    </div>
+                    <div class="field">
+                        <label class="label">Email</label>
+                        <div class="control">
+                            <input class="input is-link" type="email" placeholder="Email input" id="email" name="email" required>
+                        </div>
+                    </div>
 
-    <div class="field">
-        <label class="label">Message</label>
-        <div class="control">
-            <textarea class="textarea is-link" placeholder="Textarea" id="message" name="message" required></textarea>
-        </div>
-    </div>
+                    <div class="field">
+                        <label class="label">Message</label>
+                        <div class="control">
+                            <textarea class="textarea is-link" placeholder="Textarea" id="message" name="message" required></textarea>
+                        </div>
+                    </div>
 
-    <div class="field is-grouped">
-        <div class="control">
-            <input class="button is-link" type="submit" name="submit" value="Submit">
-            <button class="button is-link is-light" onclick="clearField();">Cancel</button>
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <input class="button is-link" type="submit" name="submit" value="Submit">
+                            <button class="button is-link is-light" type="button" onclick="clearField();">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div></div>
-      <div class="column is-4"></div>
-</div>
-      
-</div>
-</section><br>
+    </section>
 </form>
 
 <!--footer-->
@@ -180,7 +185,7 @@ $connection->conn->close();
 <footer class="footer">
   <div class="content has-text-centered">
     <p>
-      <strong>Inventory Management</strong> by <a>Yahia Charif</a> & <a>Wiam kamili</a>
+      <strong>Inventory Management</strong> by <a>Name</a> & <a>Name</a>
     </p>
   </div>
 </footer>
