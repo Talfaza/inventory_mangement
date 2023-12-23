@@ -2,7 +2,7 @@
 
 include('connect_database.php');
 
-$connection = new Connection();
+$connection = new Connection();     
 $dbname="INVENTORY";
 
 $connection->createDatabase($dbname);

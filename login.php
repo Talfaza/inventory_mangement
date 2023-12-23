@@ -40,49 +40,42 @@ if (isset($_POST['submit'])) {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Login</title>
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css" integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css" integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
 <body>
-<form action="" method="POST">
+    <form action="" method="POST">
         <div class="hero is-fullheight">
-          <h1 class="title is-1 has-text-centered">Login</h1>
-          <div class="hero-body is-justify-content-center is-align-items-center">
-              <div class="columns is-flex is-flex-direction-column box">
-                  <div class="column">
-                      <label for="email">Username :</label>
-                      <input id="email"class="input is-link" type="text" placeholder="Username" name="user" value="<?php echo "$user_value"?>" required >
-                  </div>
-                  <div class="column">
-                      <label for="Name">Password :</label>
-                      <input class="input is-link" id="pass" type="password" placeholder="Password" name="password">
-                      <label class="checkbox">
-                        <input type="checkbox" onclick="show_password()">
-                        Show Password
-                      </label><br><br>
-                      Don't have an account ?
-                      <a href="signup.php" class="">Create a new account</a>
-                  </div>
-                  <div class="column">
-                      <button class="button is-link is-light is-fullwidth" type="submit" name="submit" >Login</button>
-                  </div>
-                  </div>
-              </div>
-          </div>
-      </div>
+            <h1 class="title is-1 has-text-centered">Login</h1>
+            <div class="hero-body is-justify-content-center is-align-items-center">
+                <div class="columns is-flex is-flex-direction-column box">
+                    <div class="column">
+                        <label for="email">Username :</label>
+                        <input id="email" class="input is-link" type="text" placeholder="Username" name="user" value="<?php echo "$user_value"?>" required>
+                    </div>
+                    <div class="column">
+                        <label for="Name">Password :</label>
+                        <input class="input is-link" id="pass" type="password" placeholder="Password" name="password">
+                        <label class="checkbox">
+                            <input type="checkbox" id="showPassword" onchange="togglePassword()"> Show Password
+                        </label><br><br>
+                        Don't have an account ?
+                        <a href="signup.php" class="">Create a new account</a>
+                    </div>
+                    <div class="column">
+                        <button class="button is-link is-light is-fullwidth" type="submit" name="submit">Login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 
-
-</form>
-
-<script src="js/pass.js"></script>
-
-
+    <script src="js/pass.js"></script>
 </body>
 </html>
