@@ -63,7 +63,7 @@ if (isset($_POST['submit'])) {
                         <label for="Name">Password :</label>
                         <input class="input is-link" id="pass" type="password" placeholder="Password" name="password">
                         <label class="checkbox">
-                            <input type="checkbox" id="showPassword" onchange="togglePassword()"> Show Password
+                            <input type="checkbox" id="showPassword"> Show Password
                         </label><br><br>
                         Don't have an account ?
                         <a href="signup.php" class="">Create a new account</a>
@@ -76,6 +76,22 @@ if (isset($_POST['submit'])) {
         </div>
     </form>
 
-    <script src="js/pass.js"></script>
+    <script>
+        
+    let showPasswordCheckbox = document.getElementById('showPassword');
+
+    showPasswordCheckbox.addEventListener('change', () => {
+    let passwordInput = document.getElementById('pass');
+
+    if (showPasswordCheckbox.checked) {
+        passwordInput.type = 'text';
+    } else {
+        passwordInput.type = 'password';
+    }
+});
+
+    </script>
+    <!-- <script src="js/pass.js"></script> -->
+    
 </body>
 </html>
