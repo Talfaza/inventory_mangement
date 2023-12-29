@@ -52,8 +52,17 @@ function createTable($query){
         echo "Error creating table: " . mysqli_error($this->conn);
         }
         
+        
 }
-
+function insertTable($query){
+    
+    if (mysqli_query($this->conn, $query)) {
+        echo "Table Clients ADDED successfully";
+        } else {
+        echo "Error creating table: " . mysqli_error($this->conn);
+        }
+        
+}
 function admin_add(){
     
     $query = "SELECT id FROM INVENTORY.USER WHERE id='1'";

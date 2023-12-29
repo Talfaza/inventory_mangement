@@ -1,3 +1,25 @@
+<!-- product_management.php -->
+<?php
+include_once "../database/connect_database.php";
+include_once "../classes/Product.php";
+include_once "../classes/User.php";
+session_start();
+$conn = (new Connection())->getConnection();
+
+if (isset($_SESSION["user"])) {
+    $user_info = $_SESSION["user"];
+    $user = new User($user_info->getId(), $user_info->getUsername(), $user_info->getEmail(), $user_info->getPassword());
+} else {
+    echo "User information not available.";
+    exit;
+}
+
+
+
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,21 +92,13 @@
 
       <div class="card">
         <div class="card-header"><p class="has-text-centered card-header-title">Header</p></div>
-        <div class="card-content"><div class="content">Content</div></div>
+        <div class="card-content"><div class="content"><?php echo "Welcom " . $user->getUsername() . "!";?></div></div>
       </div>
       <br />
       
-      <div class="card is-hidden1">
-        <div class="card-header"><p class="card-header-title">Header</p></div>
-        <div class="card-content"><div class="content">Content</div></div>
-      </div>
-      <br />
+    
       
-      <div class="card is-hidden1">
-        <div class="card-header"><p class="card-header-title">Header</p></div>
-        <div class="card-content"><div class="content">Content</div></div>
-      </div>
-      <br/>
+    
     <div></div>
 
   

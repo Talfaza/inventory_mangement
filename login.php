@@ -1,21 +1,22 @@
+<!-- login.php -->
 <?php
+include_once "database/connect_database.php";
+include_once "classes/User.php";
+
+$conn = (new Connection())->getConnection();
 
 $user_value = "";
 $pass_value = "";
-
-include "database/connect_database.php";
-$conn = new Connection();
 
 if (isset($_POST['submit'])) {
     $user_value = $_POST['user'];
     $pass_value = $_POST['password'];
 
-
-    $stmt = $conn->getConnection()->prepare("SELECT * FROM INVENTORY.USER WHERE user = ? AND pass = ?");
-    $stmt->bind_param("ss", $user_value, $pass_value);
+    $stmt = $conn->prepare("SELECT * FROM INVENTORY.USER WHERE user = ?");
+    $stmt->bind_param("s", $user_value);
     $stmt->execute();
     $result = $stmt->get_result();
-    
+
     $stmt->close();
 
     if ($result->num_rows > 0) {
@@ -24,19 +25,30 @@ if (isset($_POST['submit'])) {
         $check_user = $row['user'];
         $check_pass = $row['pass'];
 
-        if ($user_value == $check_user && $pass_value == $check_pass) {
-            session_start();
-            $_SESSION["user_id"] = $user_value;
 
-            if ($user_value === 'admin' && $pass_value === 'admin') {
-                header('Location: admin/admin_home.php');
-            } else {
-                header('Location: user/user_management_home.php');
-            }
-            exit;
-        }
+
+                if ($user_value == $check_user && $pass_value == $check_pass) {
+                    session_start();
+                    $user = new User($row['id'], $check_user, $row['email'], $check_pass);
+
+                    // Start the session and store the User object
+                    
+                    $_SESSION["user"] = $user;
+
+                    // Check the user role from the database
+                    $user_role = $row['role'];
+
+                   if ($user_value == "admin"  && $pass_value == "admin") {
+                        header("Location: admin\admin_home.php");
+                   }else{
+                        header("Location: user/user_management_home.php");
+                   }
+                    exit;
+                }
+
+  
+
     }
-
 }
 ?>
 
@@ -77,21 +89,17 @@ if (isset($_POST['submit'])) {
     </form>
 
     <script>
-        
-    let showPasswordCheckbox = document.getElementById('showPassword');
+        let showPasswordCheckbox = document.getElementById('showPassword');
 
-    showPasswordCheckbox.addEventListener('change', () => {
-    let passwordInput = document.getElementById('pass');
+        showPasswordCheckbox.addEventListener('change', () => {
+            let passwordInput = document.getElementById('pass');
 
-    if (showPasswordCheckbox.checked) {
-        passwordInput.type = 'text';
-    } else {
-        passwordInput.type = 'password';
-    }
-});
-
+            if (showPasswordCheckbox.checked) {
+                passwordInput.type = 'text';
+            } else {
+                passwordInput.type = 'password';
+            }
+        });
     </script>
-    <!-- <script src="js/pass.js"></script> -->
-    
 </body>
 </html>
