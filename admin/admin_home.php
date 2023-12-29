@@ -40,6 +40,7 @@ session_start();
       <a class="nav-item is-tab is-pulled-right" href="../login.php">
         Sign Out 
         <span class="icon"><i class="fa fa-sign-out"></i></span>
+        <?php session_abort();?>
       </a>
     </div>
     <label for="menu-toggle" class="nav-toggle">
